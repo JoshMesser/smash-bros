@@ -1,5 +1,7 @@
 # smash-bros
 
+## Super Smash Bros N64 Record keeping application
+
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
