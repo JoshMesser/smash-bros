@@ -4,6 +4,7 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'smash-bros',
+    podModulePrefix: 'smash-bros/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',
@@ -22,6 +23,7 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
     firebase: {
       apiKey: "AIzaSyAaRvEXo05wJvVSNNIdlPyYgVXAd3MPEMw",
       authDomain: "smash-bros-b8bd7.firebaseapp.com",
@@ -29,6 +31,10 @@ module.exports = function(environment) {
       projectId: "smash-bros-b8bd7",
       storageBucket: "smash-bros-b8bd7.appspot.com",
       messagingSenderId: "792509984208"
+    },
+
+    torii: {
+      sessionServiceName: 'session'
     }
   };
 

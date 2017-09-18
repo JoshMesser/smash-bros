@@ -1,0 +1,82 @@
+{{create-match matches=matches}}
+
+{{#if matches.length}}
+  <table style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Created On</th>
+        <th>Type</th>
+        <th>Coop / FFA</th>
+        <th>Limit</th>
+        <th>Stage</th>
+        <th>Players</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each matches as |match|}}
+        <tr>
+          <td>
+            {{output-date match.created}}
+          </td>
+          <td>
+            {{match.type}}
+          </td>
+          <td>
+            {{#if match.coop}}
+              Co-op
+            {{else}}
+              FFA
+            {{/if}}
+          </td>
+          <td>
+            {{match.limit}} Minutes
+          </td>
+          <td>
+            {{match.stage}}
+          </td>
+          <td class="{{if match.details 'player-details'}}">
+            <ul class="unstyled">
+              {{#each match.players as |player|}}
+                <li>
+                  {{player.userDisplayName}}
+
+                  {{#if player.character}}
+                    ({{player.character}})
+                  {{/if}}
+                </li>
+              {{/each}}
+            </ul>
+          </td>
+          <td>
+            <ul class="unstyled">
+              <li>
+                {{#if match.details}}
+                  <button type="button" {{action 'hideDetails' match}}>Hide Details</button>
+                {{else}}
+                  <button type="button" {{action 'viewDetails' match}}>View Details</button>
+                {{/if}}
+              </li>
+              <li>
+                <button type="button" {{action 'joinMatch' match}}>Join Match</button>
+              </li>
+              <li>
+                <button type="button" {{action 'deleteMatch' match}}>Delete Match</button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        {{#if match.details}}
+          <tr>
+            <td colspan="7">
+              {{player-listing match=match}}
+            </td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
+{{yield}}

@@ -1,0 +1,33 @@
+<table class="player-table">
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Character</th>
+      <th>Team</th>
+      <th>Kills</th>
+      <th>Deaths</th>
+      <th>Score</th>
+      <th>Ratio</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each match.players as |player|}}
+      {{#if (eq session.currentUser.displayName player.userDisplayName) }}
+        {{manage-player match=match player=player}}
+      {{else}}
+        <tr>
+          <td>{{player.userDisplayName}}</td>
+          <td>{{player.character}}</td>
+          <td>{{player.team}}</td>
+          <td>{{player.kills}}</td>
+          <td>{{player.deaths}}</td>
+          <td>{{plyaer.score}}</td>
+          <td>{{player.ratio}}</td>
+          <td>&nbsp;</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  </tbody>
+</table>
+

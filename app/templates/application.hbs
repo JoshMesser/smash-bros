@@ -1,3 +1,35 @@
-<h2 id="title">Welcome to Ember</h2>
+<div class="app-header">
+  <ul class="actions">
+    {{#if session.isAuthenticated}}
+      <li>
+        <img src="{{session.currentUser.photoURL}}" class="avatar" />
+      </li>
+      <li>
+        {{session.currentUser.displayName}}
+      </li>
+      <li>
+        <button {{action 'signOut'}}>Logout</button>
+      </li>
+    {{/if}}
+  </ul>
 
-{{outlet}}
+  <h2 id="title">Super Smash Bros v0.1 Beta</h2>
+</div>
+
+{{#if session.isAuthenticated}}
+
+  <h2>How does this work?</h2>
+  <ol>
+    <li>Create a new match by pressing "Create a new match" button.</li>
+    <li>Setup your match and click "Create".</li>
+    <li>Join the match by selecting "Join Match"</li>
+    <li>Select View Details to see player stats for that match, as well as update your own.</li>
+  </ol>
+
+  {{outlet}}
+
+  {{match-listing}}
+
+{{else}}
+  <button {{action 'signIn' 'google'}}>Sign in with Google</button>
+{{/if}}

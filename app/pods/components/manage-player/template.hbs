@@ -1,0 +1,45 @@
+<td>{{player.userDisplayName}}</td>
+<td>
+  <div><strong>Selected:</strong> {{player.character}}</div>
+  <a href="#!select-character" {{action 'toggleSelectCharacter' player}}>Toggle Character Selection</a>
+
+  {{#if player.selectCharacter}}
+    <div class="character-select">
+      {{#each characters as |char|}}
+        <label>
+          <img src="{{char.image}}" />
+          <span>
+            {{radio-button value=char.name groupValue=player.character}}
+            {{char.name}}
+          </span>
+        </label>
+      {{/each}}
+    </div>
+  {{/if}}
+</td>
+<td>
+  <div><strong>Selected:</strong> {{player.team}}</div>
+  {{#each teamColors as |color|}}
+    <label>
+      {{radio-button value=color groupValue=player.team}}
+      {{color}}
+    </label>
+  {{/each}}
+</td>
+<td>
+  {{input type="number" value=player.kills}}
+</td>
+<td>
+  {{input type="number" value=player.deaths}}
+</td>
+<td>
+  {{player.score}}
+</td>
+<td>
+  {{player.ratio}}
+</td>
+<td>
+  {{#if player.hasDirtyAttributes}}
+    <button type="button" {{action 'save'}}>Save</button>
+  {{/if}}
+</td>
