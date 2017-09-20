@@ -1,6 +1,8 @@
 {{create-match matches=matches}}
 
 {{#if matches.length}}
+  <h2 class="match-listing-header">Matches</h2>
+
   <table style="width: 100%;">
     <thead>
       <tr>
@@ -69,7 +71,7 @@
 
         {{#if match.details}}
           <tr>
-            <td colspan="7">
+            <td colspan="7" class="player-table-wrapper">
               {{player-listing match=match}}
             </td>
           </tr>

@@ -5,5 +5,7 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  session: service()
+  tagName: 'table',
+  classNames: ['player-table'],
+  session: service(),
 });
