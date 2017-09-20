@@ -36,13 +36,21 @@
               {{input type="number" max="99" min="0" value=match.limit}}
               <p>Enter zero (0) for infinite</p>
             </td>
-            <td>
+            <td rowspan="2">
               {{#each stages as |stage|}}
                 <label>
                   {{radio-button value=stage.label groupValue=match.stage}}
                   {{stage.label}}
                 </label>
               {{/each}}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="text-align:right;">
+              {{#if selectedStageImage}}
+                <img src="{{selectedStageImage}}" height="200" />
+                <p>These images are from the WiiU version.</p>
+              {{/if}}
             </td>
           </tr>
           <tr>

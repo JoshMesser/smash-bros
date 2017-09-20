@@ -14,9 +14,7 @@ export default Ember.Route.extend({
   actions: {
 
     signIn( provider ) {
-      this.get('session').open('firebase', { provider }).then(data => {
-        console.log(data.currentUser);
-      }).catch(() => {
+      this.get('session').open('firebase', { provider }).then(() => {}).catch(() => {
         alert('Failed to create a new session.');
       });
     },
