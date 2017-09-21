@@ -21,8 +21,10 @@ export default Ember.Route.extend({
 
   afterModel() {
     const audio = this.get('audio');
-
-    audio.getSound('startup-music').play();
+    const found = audio.getSound('startup-music');
+    if ( found ) {
+      found.play();
+    }
   },
 
   actions: {

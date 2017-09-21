@@ -37,15 +37,20 @@ export default Ember.Component.extend({
     const team = this.get('player.team');
 
     if ( team !== 'None' ) {
-      audio.getSound( team ).play();
+      const found = audio.getSound( team );
+      if( found ) {
+        found.play();
+      }
     }
   }),
 
   playerObserver: observer('player.character', function() {
     const audio = this.get('audio');
     const charName = this.get('player.character');
-
-    audio.getSound( charName ).play();
+    const found = audio.getSound( charName )
+    if ( found ) {
+      found.play();
+    }
   }),
 
   actions: {
