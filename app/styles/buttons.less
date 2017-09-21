@@ -7,6 +7,11 @@ button {
   padding: @button-padding;
   margin: 0;
   box-shadow: @button-shadow;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
+  }
 
   &.active,
   &:active {

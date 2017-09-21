@@ -4,14 +4,21 @@ label {
 
 .sign-in {
   margin: 0 auto;
-  padding: 20em 0;
+  padding: 18em 0;
   text-align: center;
   height: 100%;
   width: 100%;
   background-image: url(https://www.ssbwiki.com/images/4/42/Supersmashbox.jpg);
 
+  animation: backgroundslide 5s linear infinite;
+
   > button {
     padding: 2em;
+    transition: all 1s;
+
+    &:hover {
+      transform: scale(2, 0.8) rotate(20deg);
+    }
   }
 }
 
