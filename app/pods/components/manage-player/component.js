@@ -3,26 +3,52 @@ import Ember from 'ember';
 const {
   inject: { service },
   computed,
-  get,
-  set
+  observer,
+  on
 } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'tr',
   constants: service(),
+  audio: service(),
+
   characters: computed.alias('constants.characters'),
 
   teamColors: ['None', 'Red', 'Blue', 'Green'],
 
-  actions: {
-    toggleSelectCharacter( player ) {
-      const cv = get(player, 'selectCharacter');
-      if( cv ) {
-        set(player, 'selectCharacter', false);
-      } else {
-        set(player, 'selectCharacter', true);
+  initSounds: on('init', function() {
+    const audio = this.get('audio');
+    const characters = this.get('characters');
+    const colors = this.get('teamColors');
+
+    colors.forEach(color => {
+      if ( color !== 'None' ) {
+        audio.load(`sounds/Announcer - ${color} Team.wav`).asSound( color );
       }
-    },
+    });
+
+    characters.forEach(char => {
+      audio.load( char.sound ).asSound( char.name );
+    });
+  }),
+
+  teamColorObserver: observer('player.team', function() {
+    const audio = this.get('audio');
+    const team = this.get('player.team');
+
+    if ( team !== 'None' ) {
+      audio.getSound( team ).play();
+    }
+  }),
+
+  playerObserver: observer('player.character', function() {
+    const audio = this.get('audio');
+    const charName = this.get('player.character');
+
+    audio.getSound( charName ).play();
+  }),
+
+  actions: {
 
     save() {
       this.get('player').save();
