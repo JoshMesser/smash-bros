@@ -10,6 +10,7 @@ table tr td {
   text-align: left;
   border-bottom: @table-border;
   padding: @table-padding;
+  transition: background-color 1s;
 }
 
 table tr:first-child td {
@@ -31,6 +32,7 @@ table.create-match {
 
 tr td.player-table-wrapper {
   padding: 0;
+  border: none;
 }
 
 table.player-table {
@@ -46,3 +48,12 @@ tr td.player-details {
   border-bottom: none;
 }
 
+tr.day td {
+  background: #eee;
+  text-align: center;
+  font-size: @font-size * 2;
+
+  a {
+    text-decoration: none;
+  }
+}

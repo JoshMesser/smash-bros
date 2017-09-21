@@ -1,4 +1,4 @@
-{{#if create}}
+{{#liquid-if create class="create-match"}}
   <form class="create-match" {{action 'createMatch' on="submit"}}>
     <fieldset>
       <legend>
@@ -65,5 +65,7 @@
     </fieldset>
   </form>
 {{else}}
-  <button type="button" {{action 'toggleCreate'}}>Create a new match</button>
-{{/if}}
+  <center>
+    <button type="button" {{action 'toggleCreate'}}>Create a new match</button>
+  </center>
+{{/liquid-if}}

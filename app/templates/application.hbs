@@ -16,7 +16,11 @@
   <h2 id="title">Super Smash Bros v0.2 Beta</h2>
 </div>
 
-{{#if session.isAuthenticated}}
+{{#liquid-if session.isAuthenticated class="login"}}
+
+  {{outlet}}
+
+  {{match-listing}}
 
   <div class="about">
     <h2>How does this work?</h2>
@@ -27,13 +31,8 @@
       <li>Select View Details to see player stats for that match, as well as update your own.</li>
     </ol>
   </div>
-
-  {{outlet}}
-
-  {{match-listing}}
-
 {{else}}
   <div class="sign-in">
     <button {{action 'signIn' 'google'}}>Sign in with Google</button>
   </div>
-{{/if}}
+{{/liquid-if}}

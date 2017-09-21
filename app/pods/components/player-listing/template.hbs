@@ -17,7 +17,10 @@
     {{else}}
       <tr>
         <td>{{player.userDisplayName}}</td>
-        <td>{{player.character}}</td>
+        <td>
+          <img src="{{player.characterImage}}" height="50" />
+          {{player.character}}
+        </td>
         <td>{{player.team}}</td>
         <td>{{player.kills}}</td>
         <td>{{player.deaths}}</td>

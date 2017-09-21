@@ -1,82 +1,91 @@
-{{create-match matches=matches}}
+{{create-match onCreate=(action 'onCreate')}}
 
-{{#if matches.length}}
+{{#if matches}}
   <h2 class="match-listing-header">Matches</h2>
 
   <table style="width: 100%;">
     <thead>
       <tr>
-        <th>Created On</th>
         <th>Type</th>
         <th>Coop / FFA</th>
         <th>Limit</th>
         <th>Stage</th>
-        <th>Players</th>
+        <th>
+          Players<br>
+          <em>score player (character)</em>
+        </th>
         <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      {{#each matches as |match|}}
-        <tr>
-          <td>
-            {{output-date match.created}}
-          </td>
-          <td>
-            {{match.type}}
-          </td>
-          <td>
-            {{#if match.coop}}
-              Co-op
-            {{else}}
-              FFA
-            {{/if}}
-          </td>
-          <td>
-            {{match.limit}} Minutes
-          </td>
-          <td>
-            {{match.stage}}
-          </td>
-          <td class="{{if match.details 'player-details'}}">
-            <ul class="unstyled">
-              {{#each match.players as |player|}}
-                <li>
-                  {{player.userDisplayName}}
-
-                  {{#if player.character}}
-                    ({{player.character}})
-                  {{/if}}
-                </li>
-              {{/each}}
-            </ul>
-          </td>
-          <td>
-            <ul class="unstyled">
-              <li>
-                {{#if match.details}}
-                  <button type="button" {{action 'hideDetails' match}}>Hide Details</button>
-                {{else}}
-                  <button type="button" {{action 'viewDetails' match}}>View Details</button>
-                {{/if}}
-              </li>
-              <li>
-                <button type="button" {{action 'joinMatch' match}}>Join Match</button>
-              </li>
-              <li>
-                <button type="button" {{action 'deleteMatch' match}}>Delete Match</button>
-              </li>
-            </ul>
+      {{#each-in matches as |key matchObj|}}
+        <tr class="day">
+          <td colspan="6">
+            <a href="#!toggle" {{action 'toggleMatchVisibility' matchObj.state}}>
+              [{{if matchObj.state.hidden '+' '-'}}] {{key}}
+            </a>
           </td>
         </tr>
 
-        {{#if match.details}}
-          <tr>
-            <td colspan="7" class="player-table-wrapper">
-              {{player-listing match=match}}
+        {{#each matchObj.matches as |match|}}
+          <tr class="animated {{if matchObj.state.hidden 'hidden'}}">
+            <td>
+              {{match.type}}
+            </td>
+            <td>
+              {{match.coop}}
+            </td>
+            <td>
+              {{match.limit}} Minutes
+            </td>
+            <td>
+              {{match.stage}}<br>
+              <img src="{{match.stageImage}}" height="100" />
+            </td>
+            <td class="{{if match.details 'player-details'}}">
+              <ul class="unstyled">
+                {{#each match.players as |player|}}
+                  <li>
+                    {{#if player.score}}
+                      <strong>{{player.score}}</strong>
+                    {{/if}}
+
+                    {{player.userDisplayName}}
+
+                    {{#if player.character}}
+                      ({{player.character}})
+                    {{/if}}
+                  </li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>
+              <ul class="unstyled">
+                <li>
+                  {{#if match.details}}
+                    <button type="button" class="active" {{action 'hideDetails' match}}>Player Info</button>
+                  {{else}}
+                    <button type="button" {{action 'viewDetails' match}}>Player Info</button>
+                  {{/if}}
+                </li>
+                <li>
+                  <br>
+                  <button type="button" {{action 'joinMatch' match}}>Join</button>
+                  <button type="button" {{action 'deleteMatch' key match}}>Delete</button>
+                </li>
+              </ul>
             </td>
           </tr>
-        {{/if}}
-      {{/each}}
+
+          <tr>
+            <td colspan="7" class="player-table-wrapper">
+              {{#liquid-if match.details class="player-listing"}}
+                {{player-listing match=match}}
+              {{/liquid-if}}
+            </td>
+          </tr>
+        {{/each}}
+      {{/each-in}}
     </tbody>
   </table>
 {{/if}}

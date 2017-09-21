@@ -4,14 +4,24 @@ const {
   inject: { service },
   run,
   set,
+  get,
   RSVP
 } = Ember;
+
+function outputDate( date ) {
+  const d = new Date(date);
+  const m = d.getMonth();
+  const day = d.getDate();
+  const y = d.getFullYear();
+
+  return `${m}-${day}-${y}`;
+}
 
 export default Ember.Component.extend({
   session: service(),
   store: service(),
 
-  matches: Ember.A([]),
+  matches: {},
 
   willInsertElement() {
     run.scheduleOnce('render', this, this.fetchMatches);
@@ -20,8 +30,29 @@ export default Ember.Component.extend({
   fetchMatches() {
     const store = this.get('store');
 
-    store.findAll('match').then(matches => {
-      this.get('matches').pushObjects( matches.toArray() );
+    store.query('match', { orderBy: 'created', limitToLast: 25 })
+    // reverse the order of this array
+    .then(matches => matches.toArray().reverse())
+    .then(matchesArray => {
+      const matchesObj = get(this, 'matches');
+      let isFirst = true;
+
+      matchesArray.forEach(match => {
+        const created = outputDate(get(match, 'created'));
+
+        if ( matchesObj[created] ) {
+          get(matchesObj, `${created}.matches`).pushObject( match );
+        } else {
+          set(matchesObj, created, {
+            state: { hidden: isFirst ? false : true },
+            matches: Ember.A([ match ])
+          });
+          isFirst = false;
+        }
+      });
+
+      set(this, 'matches', matchesObj);
+
     }).catch(() => {
       alert('Failed getting matches! (check console)');
     });
@@ -29,8 +60,22 @@ export default Ember.Component.extend({
 
   actions: {
 
-    deleteMatch( match ) {
-      this.get('matches').removeObject( match );
+    onCreate( newMatch ) {
+      const matches = get(this, 'matches');
+      const created = outputDate( get(newMatch, 'created') );
+
+      if ( get(matches, created) ) {
+        get(matches, `${created}.matches`).pushObject( newMatch );
+      } else {
+        set(matches, created, {
+          state: { hidden: false },
+          matches: Ember.A([ newMatch ])
+        });
+      }
+    },
+
+    deleteMatch( key, match ) {
+      this.get(`matches.${key}.matches`).removeObject( match );
 
       // delete all players first
       const promises = match.get('players').map(player => player.destroyRecord());
@@ -57,9 +102,10 @@ export default Ember.Component.extend({
         userDisplayName: session.get('currentUser.displayName')
       });
 
-      player.save().then((newPlayer) => {
+      player.save().then(newPlayer => {
         match.get('players').pushObject( newPlayer );
         match.save();
+        this.send('viewDetails', match);
       });
     },
 
@@ -69,7 +115,13 @@ export default Ember.Component.extend({
 
     hideDetails( match ) {
       set(match, 'details', false);
-    }
+    },
+
+    toggleMatchVisibility( matchState ) {
+      set(matchState, 'hidden', 
+        !get(matchState, 'hidden')
+      );
+    },
 
   }
 

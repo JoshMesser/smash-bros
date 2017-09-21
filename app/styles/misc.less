@@ -5,29 +5,50 @@ ul.unstyled, ol.unstyled {
   text-indent: 0;
 }
 
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
 .character-select {
   background: white;
   max-height: 200px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 200px;
+  overflow: auto;
+  padding: 0.3em;
+  border-radius: 1em;
+  text-align: center;
 
   > label {
+    display: inline-block;
+    min-width: 50px;
     text-align: center;
-    border-bottom: 1px solid black;
+    border-radius: 0.2em;
     cursor: pointer;
+    overflow: hidden;
 
     &:hover {
-      background: #eee;
+      color: blue;
+      
+      img {
+        transform: rotate(25deg);
+      }
     }
 
     img {
       max-height: 100px;
+      transition: 0.4s;
     }
 
     span {
-      font-size: 1em;
+      font-size: 0.7em;
       display: block;
+    }
+
+    &.active {
+      background: @player-table-bg;
     }
 
   }

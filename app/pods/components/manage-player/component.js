@@ -74,6 +74,11 @@ export default Ember.Component.extend({
     save() {
       this.get('player').save();
       return;
+    },
+
+    leaveMatch( player, match ) {
+      match.get('players').removeObject( player );
+      player.destroyRecord();
     }
   }
 });

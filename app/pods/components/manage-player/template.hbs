@@ -1,24 +1,18 @@
 <td>{{player.userDisplayName}}</td>
 <td>
-  <div><strong>Selected:</strong> {{player.character}}</div>
-  <a href="#!select-character" {{action 'toggleSelectCharacter' player}}>Toggle Character Selection</a>
-
-  {{#if player.selectCharacter}}
-    <div class="character-select">
-      {{#each characters as |char|}}
-        <label>
-          <img src="{{char.image}}" />
-          <span>
-            {{radio-button value=char.name groupValue=player.character}}
-            {{char.name}}
-          </span>
-        </label>
-      {{/each}}
-    </div>
-  {{/if}}
+  <div class="character-select">
+    {{#each characters as |char|}}
+      <label class="{{if (eq char.name player.character) 'active'}}">
+        <img src="{{char.image}}" />
+        <span>
+          {{radio-button value=char.name groupValue=player.character}}
+          {{char.name}}
+        </span>
+      </label>
+    {{/each}}
+  </div>
 </td>
 <td>
-  <div><strong>Selected:</strong> {{player.team}}</div>
   {{#each teamColors as |color|}}
     <label>
       {{radio-button value=color groupValue=player.team}}
@@ -42,4 +36,5 @@
   {{#if player.hasDirtyAttributes}}
     <button type="button" {{action 'save'}}>Save</button>
   {{/if}}
+  <button type="button" {{action 'leaveMatch' player match}}>Leave</button>
 </td>

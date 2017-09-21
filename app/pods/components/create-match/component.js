@@ -62,9 +62,10 @@ export default Ember.Component.extend({
       set(match, 'created', new Date().getTime());
 
       store.createRecord('match', match).save()
-      .then((match) => {
+      .then(match => {
         this.set('create', false);
-        this.get('matches').pushObject( match );
+        // this.get('matches').pushObject( match );
+        this.sendAction('onCreate', match);
       })
       .catch(() => {
         alert('Failed to create the match!');
