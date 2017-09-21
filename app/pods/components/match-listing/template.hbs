@@ -45,14 +45,10 @@
               <ul class="unstyled">
                 {{#each match.players as |player|}}
                   <li>
-                    {{#if player.score}}
-                      <strong>{{player.score}}</strong>
-                    {{/if}}
-
+                    <strong>{{player.score}}</strong>
                     {{player.userDisplayName}}
-
                     {{#if player.character}}
-                      ({{player.character}})
+                      <img src="{{player.smallCharacterImage}}" height="14" title="{{player.character}}" />
                     {{/if}}
                   </li>
                 {{/each}}
