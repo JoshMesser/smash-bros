@@ -1,62 +1,20 @@
 import Ember from 'ember';
+import utilities from 'smash-bros/utilities';
+
+const {
+  outputDate
+} = utilities;
 
 const {
   inject: { service },
-  run,
   set,
   get,
   RSVP
 } = Ember;
 
-function outputDate( date ) {
-  const d = new Date(date);
-  const m = d.getMonth();
-  const day = d.getDate();
-  const y = d.getFullYear();
-
-  return `${m}-${day}-${y}`;
-}
-
 export default Ember.Component.extend({
   session: service(),
   store: service(),
-
-  matches: {},
-
-  willInsertElement() {
-    run.scheduleOnce('render', this, this.fetchMatches);
-  },
-
-  fetchMatches() {
-    const store = this.get('store');
-
-    store.query('match', { orderBy: 'created', limitToLast: 25 })
-    // reverse the order of this array
-    .then(matches => matches.toArray().reverse())
-    .then(matchesArray => {
-      const matchesObj = get(this, 'matches');
-      let isFirst = true;
-
-      matchesArray.forEach(match => {
-        const created = outputDate(get(match, 'created'));
-
-        if ( matchesObj[created] ) {
-          get(matchesObj, `${created}.matches`).pushObject( match );
-        } else {
-          set(matchesObj, created, {
-            state: { hidden: isFirst ? false : true },
-            matches: Ember.A([ match ])
-          });
-          isFirst = false;
-        }
-      });
-
-      set(this, 'matches', matchesObj);
-
-    }).catch(() => {
-      alert('Failed getting matches! (check console)');
-    });
-  },
 
   actions: {
 
