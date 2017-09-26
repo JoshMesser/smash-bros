@@ -9,12 +9,40 @@ const {
   inject: { service },
   set,
   get,
-  RSVP
+  RSVP,
+  computed
 } = Ember;
 
 export default Ember.Component.extend({
   session: service(),
   store: service(),
+  matches: Ember.A([]),
+
+  formattedMatches: computed('matches.[]', {
+    get() {
+      const matchesArray = this.get('matches').toArray();
+      const matchesAr = [];
+
+      matchesArray.forEach(match => {
+        const created = outputDate(get(match, 'created'));
+        const record = matchesAr.findBy('created', created);
+
+        if ( record )  {
+          get(record, 'matches').pushObject( match );
+        } else {
+          matchesAr.pushObject({
+            created,
+            state: { hidden: true },
+            matches: Ember.A([ match ])
+          });
+        }
+      });
+
+      const returnVal = matchesAr.sortBy('created').reverse();
+      returnVal.set('firstObject.state.hidden', false);
+      return returnVal;
+    }
+  }),
 
   actions: {
 

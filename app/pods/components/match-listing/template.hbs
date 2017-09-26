@@ -18,11 +18,11 @@
       </tr>
     </thead>
     <tbody>
-      {{#each-in matches as |key matchObj|}}
+      {{#each formattedMatches as |matchObj|}}
         <tr class="day">
           <td colspan="6">
             <a href="#!toggle" {{action 'toggleMatchVisibility' matchObj.state}}>
-              [{{if matchObj.state.hidden '+' '-'}}] {{key}}
+              [{{if matchObj.state.hidden '+' '-'}}] {{matchObj.created}}
             </a>
           </td>
         </tr>
@@ -80,7 +80,7 @@
             </td>
           </tr>
         {{/each}}
-      {{/each-in}}
+      {{/each}}
     </tbody>
   </table>
 {{/if}}
