@@ -1,0 +1,26 @@
+<h2 class="leaderboard-header">Leaderboard</h2>
+
+<table style="width:100%">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Kills</th>
+			<th>Deaths</th>
+			<th>Score</th>
+			<th>Ratio</th>
+			<th>Total Matches</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each model as |player|}}
+			<tr>
+				<td>{{player.name}}</td>
+				<td>{{player.total.kills}}</td>
+				<td>{{player.total.deaths}}</td>
+				<td>{{player.total.score}}</td>
+				<td>{{player.total.ratio}}</td>
+				<td>{{player.history.length}}</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

@@ -49,6 +49,7 @@ export default Ember.Route.extend({
   initAudioFile: on('init', function() {
     const audio = this.get('audio');
 
+    audio.load('sounds/19. Character Select.mp3').asSound('background-track');
     audio.load('sounds/Announcer - Title (USA).wav').asSound('startup-music');
   }),
 
@@ -58,10 +59,18 @@ export default Ember.Route.extend({
 
   afterModel() {
     const audio = this.get('audio');
-    const found = audio.getSound('startup-music');
-    if ( found ) {
-      found.play();
+    const startup = audio.getSound('startup-music');
+    const background = audio.getSound('background-track');
+
+    if ( startup ) {
+      startup.play();
     }
+
+    Ember.run.later(() => {
+      if ( background ) {
+        background.play();
+      }
+    }, 5000);
   },
 
   actions: {
