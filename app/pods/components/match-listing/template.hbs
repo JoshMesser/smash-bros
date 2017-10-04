@@ -22,7 +22,7 @@
         <tr class="day">
           <td colspan="6">
             <a href="#!toggle" {{action 'toggleMatchVisibility' matchObj.state}}>
-              [{{if matchObj.state.hidden '+' '-'}}] {{matchObj.created}}
+              [{{if matchObj.state.hidden '+' '-'}}] {{output-date matchObj.created}}
             </a>
           </td>
         </tr>

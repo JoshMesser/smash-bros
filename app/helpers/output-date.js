@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export function outputDate([ date ]/*, hash*/) {
   const d = new Date(date);
-  const m = d.getMonth() + 1;
+  const m = d.getMonth() + 2;
   const day = d.getDate();
   const y = d.getFullYear();
 
