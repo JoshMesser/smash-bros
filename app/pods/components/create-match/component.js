@@ -43,6 +43,15 @@ export default Ember.Component.extend({
   actions: {
     toggleCreate() {
       this.toggleProperty('create');
+
+      if ( this.get('create') === false ) {
+        this.set('match', {
+          type: '',
+          coop: '',
+          limit: 5,
+          stage: ''
+        });
+      }
     },
 
     createMatch() {
