@@ -1,64 +1,71 @@
 {{#liquid-if create class="create-match"}}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Create Match{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
 
-  <fieldset>
-    <legend>Create Match</legend>
+    {{#card.content}}
+      {{#paper-form onSubmit=(action 'createMatch') as |form|}}
+        <div class="layout-column layout-gt-md-row layout-align-center-top">
 
-    {{#paper-form onSubmit=(action 'createMatch') as |form|}}
-      <div class="layout-column layout-gt-md-row layout-align-center-top">
+          <div class="layout-column flex-50">
+            {{!-- Match Type Selection --}}
+            <label>Match Type</label>
+            {{#paper-radio-group groupValue=(readonly match.type) onChange=(action (mut match.type)) as |group|}}
+              {{#each matchTypes as |type|}}
+                {{#group.radio value=type.label}}
+                  {{type.label}}
+                {{/group.radio}}
+              {{/each}}
+            {{/paper-radio-group}}
 
-        <div class="layout-column flex-50">
-          {{!-- Match Type Selection --}}
-          <label>Match Type</label>
-          {{#paper-radio-group groupValue=(readonly match.type) onChange=(action (mut match.type)) as |group|}}
-            {{#each matchTypes as |type|}}
-              {{#group.radio value=type.label}}
-                {{type.label}}
-              {{/group.radio}}
-            {{/each}}
-          {{/paper-radio-group}}
+            {{!-- Co-op / FFA Selection --}}
+            <label>Co-op or FFA</label>
+            {{#paper-radio-group groupValue=(readonly match.coop) onChange=(action (mut match.coop)) as |group|}}
+              {{#each ffas as |ffa|}}
+                {{#group.radio value=ffa.label}}
+                  {{ffa.label}}
+                {{/group.radio}}
+              {{/each}}
+            {{/paper-radio-group}}
 
-          {{!-- Co-op / FFA Selection --}}
-          <label>Co-op or FFA</label>
-          {{#paper-radio-group groupValue=(readonly match.coop) onChange=(action (mut match.coop)) as |group|}}
-            {{#each ffas as |ffa|}}
-              {{#group.radio value=ffa.label}}
-                {{ffa.label}}
-              {{/group.radio}}
-            {{/each}}
-          {{/paper-radio-group}}
+            {{#if selectedStageImage}}
+              <div>
+                <br>
+                <img src="{{selectedStageImage}}" height="200" />
+                <br>
+              </div>
+            {{/if}}
+          </div>
 
-          {{#if selectedStageImage}}
-            <div>
-              <br>
-              <img src="{{selectedStageImage}}" height="200" />
-              <br>
-            </div>
-          {{/if}}
+          <div class="layout-column flex-50">
+            {{form.input type="number" max="99" min="0" label="Limit" value=match.limit onChange=(action (mut match.limit))}}
+
+            {{!-- Stage Selection --}}
+            <label>Match Stage</label>
+            {{#paper-radio-group groupValue=(readonly match.stage) onChange=(action (mut match.stage)) as |group|}}
+              {{#each stages as |stage|}}
+                {{#group.radio value=stage.label}}
+                  {{stage.label}}
+                {{/group.radio}}
+              {{/each}}
+            {{/paper-radio-group}}
+          </div>
         </div>
 
-        <div class="layout-column flex-50">
-          {{form.input type="number" max="99" min="0" label="Limit" value=match.limit onChange=(action (mut match.limit))}}
+        {{#card.actions}}
+          {{#paper-button raised=true onClick=(action 'toggleCreate')}}Cancel{{/paper-button}}
+          {{#form.submit-button raised=true primary=true}}Create{{/form.submit-button}}
+        {{/card.actions}}
+      {{/paper-form}}
+    {{/card.content}}
 
-          {{!-- Stage Selection --}}
-          <label>Match Stage</label>
-          {{#paper-radio-group groupValue=(readonly match.stage) onChange=(action (mut match.stage)) as |group|}}
-            {{#each stages as |stage|}}
-              {{#group.radio value=stage.label}}
-                {{stage.label}}
-              {{/group.radio}}
-            {{/each}}
-          {{/paper-radio-group}}
-        </div>
-      </div>
-
-      <div class="layout-row">
-        {{#paper-button raised=true onClick=(action 'toggleCreate')}}Cancel{{/paper-button}}
-        {{#form.submit-button raised=true primary=true}}Create{{/form.submit-button}}
-      </div>
-    {{/paper-form}}
-  </fieldset>
+  {{/paper-card}}
 {{else}}
-  <center>
-    {{#paper-button raised=true primary=true onClick=(action 'toggleCreate')}}Create a new match{{/paper-button}}
-  </center>
+  {{#paper-button raised=true primary=true fab=true onClick=(action 'toggleCreate')}}
+    {{paper-icon 'add'}}
+    {{#paper-tooltip position="bottom"}}Create a new match{{/paper-tooltip}}
+  {{/paper-button}}
 {{/liquid-if}}
