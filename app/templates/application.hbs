@@ -1,8 +1,29 @@
-{{app-header signOut="signOut"}}
+{{app-header openSideNav=(route-action 'openSideNav')}}
 
 {{#liquid-if session.isAuthenticated class="login"}}
+  {{#paper-sidenav-container class="inner-shadow"}}
 
-  {{outlet}}
+    {{#paper-sidenav
+      name="main-sidenav"
+      open=sideNavOpen
+      lockedOpen=false
+      onToggle=(action (mut sideNavOpen))
+    }}
+
+      {{#paper-content padding=true}}
+        {{app-sidebar
+          session=session
+          transition=(route-action 'transition')
+          signOut=(route-action "signOut")
+        }}
+      {{/paper-content}}
+
+    {{/paper-sidenav}}
+
+    {{#paper-card-content class="flex"}}
+      {{outlet}}
+    {{/paper-card-content}}
+  {{/paper-sidenav-container}}
 
 {{else}}
   <div class="sign-in">

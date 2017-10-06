@@ -1,19 +1,9 @@
 {{#paper-toolbar}}
   {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true onClick=(action 'openSideNav')}}
+      {{paper-icon 'menu'}}
+    {{/paper-button}}
+
     <h2>Super Smash Bros v0.5 Beta</h2>
-
-    <span class="flex"></span>
-
-    {{#if session.isAuthenticated}}
-
-        {{#paper-button action=(action 'transition' 'index')}}Matches{{/paper-button}}
-        {{#paper-button action=(action 'transition' 'leaderboard')}}Leaderboard{{/paper-button}}
-
-        <img src="{{session.currentUser.photoURL}}" class="avatar" />
-        {{session.currentUser.displayName}}
-
-    {{else}}
-        {{#paper-button action=(action 'signOut')}}Logout{{/paper-button}}
-    {{/if}}
   {{/paper-toolbar-tools}}
 {{/paper-toolbar}}

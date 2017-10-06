@@ -9,10 +9,10 @@ const {
 
 export default Ember.Component.extend({
   tagName: 'tr',
-  constants: service(),
+  smash: service(),
   audio: service(),
 
-  characters: computed.alias('constants.characters'),
+  characters: computed.alias('smash.characters'),
 
   teamColors: ['None', 'Red', 'Blue', 'Green'],
 

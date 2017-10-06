@@ -9,8 +9,8 @@ const {
 
 export default Ember.Component.extend({
   store: service(),
-  constants: service(),
-  stages: computed.alias('constants.stages'),
+  smash: service(),
+  stages: computed.alias('smash.stages'),
 
   match: {
     type: '',

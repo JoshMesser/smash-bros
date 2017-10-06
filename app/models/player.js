@@ -7,8 +7,8 @@ const {
 } = Ember;
 
 export default DS.Model.extend({
-  constants: service(),
-  characters: computed.alias('constants.characters'),
+  smash: service(),
+  characters: computed.alias('smash.characters'),
 
   userDisplayName: DS.attr('string'),
   character: DS.attr('string'),

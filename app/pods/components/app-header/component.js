@@ -8,8 +8,8 @@ export default Ember.Component.extend({
     session: service(),
 
     actions: {
-        transition() {
-            this.transitionToRoute(...arguments);
+        openSideNav() {
+            this.sendAction('openSideNav');
         }
     }
 });

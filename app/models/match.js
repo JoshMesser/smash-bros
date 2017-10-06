@@ -7,8 +7,8 @@ const {
 } = Ember;
 
 export default DS.Model.extend({
-  constants: service(),
-  stages: computed.alias('constants.stages'),
+  smash: service(),
+  stages: computed.alias('smash.stages'),
 
   created: DS.attr(),
   type: DS.attr('string'), // stock , timed

@@ -1,0 +1,29 @@
+{{#paper-list}}
+	{{#if session.isAuthenticated}}
+		{{#paper-item class="md-3-line"}}
+			<img src="{{session.currentUser.photoURL}}" class="md-avatar" />
+			<div class="md-list-item-text">
+				<h3>{{session.currentUser.displayName}}</h3>
+			</div>
+		{{/paper-item}}
+
+		{{#paper-item class="md-3-line" onClick=(action 'transition' 'index')}}
+			<div class="md-list-item-text">
+				<h3>Matches</h3>
+			</div>
+		{{/paper-item}}
+
+		{{#paper-item class="md-3-line" onClick=(action 'transition' 'leaderboard')}}
+			<div class="md-list-item-text">
+				<h3>Leaderboard</h3>
+			</div>
+		{{/paper-item}}
+
+		{{#paper-item class="md-3-line" onClick=(action 'signOut')}}
+			<div class="md-list-item-text">
+				<h3>Logout</h3>
+			</div>
+		{{/paper-item}}
+
+	{{/if}}
+{{/paper-list}}

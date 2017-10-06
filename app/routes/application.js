@@ -38,6 +38,10 @@ export default Ember.Route.extend({
 
   actions: {
 
+    openSideNav() {
+      this.controller.set('sideNavOpen', true);
+    },
+
     signIn( provider ) {
       this.get('session').open('firebase', { provider }).then(() => {}).catch(() => {
         alert('Failed to create a new session.');
@@ -46,6 +50,10 @@ export default Ember.Route.extend({
 
     signOut() {
       this.get('session').close();
+    },
+
+    transition(route) {
+      this.transitionTo(route);
     }
 
   }
