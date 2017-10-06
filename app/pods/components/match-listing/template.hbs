@@ -1,88 +1,69 @@
 {{create-match onCreate=(action 'onCreate')}}
 
 {{#if matches}}
-  <h1>Matches</h1>
 
-  <table style="width: 100%;">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Coop / FFA</th>
-        <th>Limit</th>
-        <th>Stage</th>
-        <th>
-          Players<br>
-          <em>score player (character)</em>
-        </th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each formattedMatches as |matchObj|}}
-        <tr class="day">
-          <td colspan="6">
-            <a href="#!toggle" {{action 'toggleMatchVisibility' matchObj.state}}>
-              [{{if matchObj.state.hidden '+' '-'}}] {{output-date matchObj.created}}
-            </a>
-          </td>
-        </tr>
+<ul class="match-listing">
+  {{#each formattedMatches as |matchObj|}}
+    <li>
+      {{#paper-button raised=true primary=true onClick=(action 'toggleMatchVisibility' matchObj.state) }}
+        {{if matchObj.state.hidden 'Show' 'Hide'}} matches on {{output-date matchObj.created}}
+      {{/paper-button}}
+
+      <div class="layout-row layout-wrap layout-xs-column {{if matchObj.state.hidden 'hide'}}">
 
         {{#each matchObj.matches as |match|}}
-          <tr class="animated {{if matchObj.state.hidden 'hidden'}}">
-            <td>
-              {{match.type}}
-            </td>
-            <td>
-              {{match.coop}}
-            </td>
-            <td>
-              {{match.limit}} Minutes
-            </td>
-            <td>
-              <img src="{{match.stageImage}}" class="round" height="100" title="{{match.stage}}" />
-            </td>
-            <td class="{{if match.details 'player-details'}}">
-              <ul class="unstyled">
-                {{#each match.players as |player|}}
-                  <li>
-                    <strong>{{player.score}}</strong>
-                    {{player.userDisplayName}}
-                    {{#if player.character}}
-                      <img src="{{player.smallCharacterImage}}" height="14" title="{{player.character}}" />
-                    {{/if}}
-                  </li>
-                {{/each}}
-              </ul>
-            </td>
-            <td>
-              <ul class="unstyled">
-                <li>
-                  {{#if match.details}}
-                    <button type="button" class="active" {{action 'hideDetails' match}}>Player Info</button>
-                  {{else}}
-                    <button type="button" {{action 'viewDetails' match}}>Player Info</button>
-                  {{/if}}
-                </li>
-                <li>
-                  <br>
-                  <button type="button" {{action 'joinMatch' match}}>Join</button>
-                  <button type="button" {{action 'deleteMatch' key match}}>Delete</button>
-                </li>
-              </ul>
-            </td>
-          </tr>
+          <div class="flex-xs flex-gt-xs-25">
 
-          <tr>
-            <td colspan="7" class="player-table-wrapper">
-              {{#liquid-if match.details class="player-listing"}}
-                {{player-listing match=match}}
-              {{/liquid-if}}
-            </td>
-          </tr>
+            {{#paper-card as |card|}}
+              {{#card.title as |title|}}
+                {{#title.text as |text|}}
+                  {{#text.headline}}
+                    {{match.type}} {{match.coop}}
+                  {{/text.headline}}
+                  {{#text.subhead}}
+                    {{match.limit}} Minutes
+                  {{/text.subhead}}
+                {{/title.text}}
+                {{title.media size="lg" src=match.stageImage alt=match.stage title=match.stage}}
+              {{/card.title}}
+
+              {{#card.content class="layout-row layout-align-space-between"}}
+                {{#paper-list}}
+                  {{#each match.players as |player|}}
+                    {{#paper-item class="md-2-line"}}
+                      {{#if player.character}}
+                        <img src="{{player.smallCharacterImage}}" class="md-avatar" title="{{player.character}}" />
+                      {{/if}}
+                      <div class="md-list-item-text">
+                        <h3>{{player.userDisplayName}}</h3>
+                        <p>Score: {{player.score}}</p>
+                      </div>
+                       {{paper-divider inset=true}}
+                    {{/paper-item}}
+                  {{/each}}
+                {{/paper-list}}
+
+              {{/card.content}}
+
+              {{#card.actions}}
+                {{#paper-button onClick=(action 'transition' 'match' match.id)}}View Details{{/paper-button}}
+
+                {{!-- Check to see if this player is already a part of this match --}}
+                {{#if match.players.isFulfilled}}
+                  {{#unless (includes (map-by match.players 'userDisplayName') session.currentUser.displayName) }}
+                    {{#paper-button onClick=(action 'joinMatch' match)}}Join{{/paper-button}}
+                  {{/unless}}
+                {{/if}}
+
+                {{#paper-button warn=true onClick=(action 'deleteMatch' key match)}}Delete{{/paper-button}}
+              {{/card.actions}}
+            {{/paper-card}}
+
+          </div>
         {{/each}}
-      {{/each}}
-    </tbody>
-  </table>
-{{/if}}
+      </div>
+    </li>
+  {{/each}}
+</ul>
 
-{{yield}}
+{{/if}}

@@ -27,3 +27,17 @@ label {
 	padding: 0.8em;
 	padding-left: 0;
 }
+
+a.day-link {
+	display: block;
+}
+
+ul.match-listing {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	md-list {
+		width: 100%;
+	}
+}

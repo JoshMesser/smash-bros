@@ -8,6 +8,10 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('leaderboard');
+
+  this.route('match', {
+    path: 'match/:match_id'
+  });
 });
 
 export default Router;

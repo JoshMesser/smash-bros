@@ -23,7 +23,7 @@ export default Ember.Component.extend({
 
     colors.forEach(color => {
       if ( color !== 'None' ) {
-        audio.load(`sounds/Announcer - ${color} Team.wav`).asSound( color );
+        audio.load(`/assets/sounds/Announcer - ${color} Team.wav`).asSound( color );
       }
     });
 

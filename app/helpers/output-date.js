@@ -6,7 +6,7 @@ export function outputDate([ date ]/*, hash*/) {
   const day = d.getDate();
   const y = d.getFullYear();
 
-  return `${m} / ${day} / ${y}`;
+  return `${m}/${day}/${y}`;
 }
 
 export default Ember.Helper.helper(outputDate);

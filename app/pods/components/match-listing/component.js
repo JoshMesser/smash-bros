@@ -61,7 +61,7 @@ export default Ember.Component.extend({
     },
 
     deleteMatch( key, match ) {
-      this.get(`matches.${key}.matches`).removeObject( match );
+      this.get('matches').removeObject( match );
 
       // delete all players first
       const promises = match.get('players').map(player => player.destroyRecord());
@@ -91,7 +91,7 @@ export default Ember.Component.extend({
       player.save().then(newPlayer => {
         match.get('players').pushObject( newPlayer );
         match.save();
-        this.send('viewDetails', match);
+        this.send('transition', 'match', match.id);
       });
     },
 
@@ -108,6 +108,10 @@ export default Ember.Component.extend({
         !get(matchState, 'hidden')
       );
     },
+
+    transition() {
+      this.sendAction('transition', ...arguments);
+    }
 
   }
 

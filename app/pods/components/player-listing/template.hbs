@@ -1,32 +1,25 @@
-<thead>
-  <tr>
-    <th>Player</th>
-    <th>Character</th>
-    <th>Team</th>
-    <th>Kills</th>
-    <th>Deaths</th>
-    <th>Score</th>
-    <th>Ratio</th>
-    <th>&nbsp;</th>
-  </tr>
-</thead>
-<tbody>
-  {{#each match.players as |player|}}
-    {{#if (eq session.currentUser.displayName player.userDisplayName) }}
-      {{manage-player match=match player=player}}
-    {{else}}
-      <tr>
-        <td>{{player.userDisplayName}}</td>
-        <td>
-          <img src="{{player.characterImage}}" height="50" title="{{player.character}}" />
-        </td>
-        <td>{{player.team}}</td>
-        <td>{{player.kills}}</td>
-        <td>{{player.deaths}}</td>
-        <td>{{player.score}}</td>
-        <td>{{player.ratio}}</td>
-        <td>&nbsp;</td>
-      </tr>
-    {{/if}}
-  {{/each}}
-</tbody>
+<div class="flex-auto">
+  {{#paper-list}}
+    {{#each match.players as |player|}}
+      {{#paper-item class="md-3-line"}}
+        <img src="{{player.characterImage}}" class="md-avatar" alt="{{player.character}}" title="{{player.character}}" />
+        <div class="md-list-item-text">
+          <h3>{{player.userDisplayName}}</h3>
+          <h4>Team: {{player.team}} | Score Ratio: {{player.ratio}}</h4>
+          <p>
+            Score: {{player.score}}<br>
+            Kills: {{player.kills}} | Deaths: {{player.deaths}}
+          </p>
+        </div>
+        {{paper-divider inset=true}}
+      {{/paper-item}}
+    {{/each}}
+  {{/paper-list}} 
+</div>
+
+{{!-- If you are part of this match, allow you to change your player details --}}
+{{#if (includes (map-by match.players 'userDisplayName') session.currentUser.displayName) }}
+  <div class="flex-50">
+    {{manage-player match=match player=sessionPlayer}}
+  </div>
+{{/if}}

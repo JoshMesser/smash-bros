@@ -13,5 +13,15 @@ export default Ember.Route.extend({
 			return this.get('store').findAll('match');
 		}
 		return undefined;
-  }
+	},
+	
+	actions: {
+    transition(route, id) {
+			if ( typeof id === 'number' || typeof id === 'string' ) {
+				this.transitionTo(route, id);
+			} else {
+				this.transitionTo(route);
+			}
+    }
+	}
 });

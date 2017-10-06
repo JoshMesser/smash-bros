@@ -12,8 +12,8 @@ export default Ember.Route.extend({
   initAudioFile: on('init', function() {
     const audio = this.get('audio');
 
-    audio.load('sounds/19. Character Select.mp3').asSound('background-track');
-    audio.load('sounds/Announcer - Title (USA).wav').asSound('startup-music');
+    audio.load('/sounds/19. Character Select.mp3').asSound('background-track');
+    audio.load('/sounds/Announcer - Title (USA).wav').asSound('startup-music');
   }),
 
   beforeModel() {
