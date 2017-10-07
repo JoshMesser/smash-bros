@@ -1,24 +1,32 @@
-<div class="flex-auto">
-  {{#paper-list}}
-    {{#each match.players as |player|}}
-      {{#paper-item class="md-3-line"}}
-        <img src="{{player.characterImage}}" class="md-avatar" alt="{{player.character}}" title="{{player.character}}" />
-        <div class="md-list-item-text">
-          <h3>{{player.userDisplayName}}</h3>
-          <h4>Team: {{player.team}} | Score Ratio: {{player.ratio}}</h4>
-          <p>
-            Score: {{player.score}}<br>
-            Kills: {{player.kills}} | Deaths: {{player.deaths}}
-          </p>
-        </div>
-        {{paper-divider inset=true}}
-      {{/paper-item}}
-    {{/each}}
-  {{/paper-list}} 
+<div class="flex-50">
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Player Listing{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+
+    {{#paper-list}}
+      {{#each match.players as |player|}}
+        {{#paper-item class="md-3-line"}}
+          <img src="{{player.characterImage}}" class="md-avatar" alt="{{player.character}}" title="{{player.character}}" />
+          <div class="md-list-item-text">
+            <h3>{{player.userDisplayName}}</h3>
+            <h4>Team: {{player.team}} | Score Ratio: {{player.ratio}}</h4>
+            <p>
+              Score: {{player.score}}<br>
+              Kills: {{player.kills}} | Deaths: {{player.deaths}}
+            </p>
+          </div>
+          {{paper-divider}}
+        {{/paper-item}}
+      {{/each}}
+    {{/paper-list}} 
+  {{/paper-card}}
 </div>
 
 {{!-- If you are part of this match, allow you to change your player details --}}
-{{#if (includes (map-by match.players 'userDisplayName') session.currentUser.displayName) }}
+{{#if sessionPlayer}}
   <div class="flex-50">
     {{manage-player match=match player=sessionPlayer}}
   </div>

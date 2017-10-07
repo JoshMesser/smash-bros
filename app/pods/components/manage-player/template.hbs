@@ -1,40 +1,53 @@
-<td>{{player.userDisplayName}}</td>
-<td>
-  <div class="character-select">
-    {{#each characters as |char|}}
-      <label class="{{if (eq char.name player.character) 'active'}}">
-        <img src="{{char.image}}" />
-        <span>
-          {{radio-button value=char.name groupValue=player.character}}
-          {{char.name}}
-        </span>
-      </label>
-    {{/each}}
-  </div>
-</td>
-<td>
-  {{#each teamColors as |color|}}
-    <label>
-      {{radio-button value=color groupValue=player.team}}
-      {{color}}
-    </label>
-  {{/each}}
-</td>
-<td>
-  {{input type="number" value=player.kills}}
-</td>
-<td>
-  {{input type="number" value=player.deaths}}
-</td>
-<td>
-  {{player.score}}
-</td>
-<td>
-  {{player.ratio}}
-</td>
-<td>
-  {{#if player.hasDirtyAttributes}}
-    <button type="button" {{action 'save'}}>Save</button>
-  {{/if}}
-  <button type="button" {{action 'leaveMatch' player match}}>Leave</button>
-</td>
+{{#paper-form onSubmit=(action 'save') as |form|}}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Manage Player Record{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+
+    {{#card.content}}
+      <div class="layout-row">
+        <div class="layout-column flex-50">
+          {{form.input label="Kills" value=player.kills onChange=(action (mut player.kills)) required=true}}
+          {{form.input label="Deaths" value=player.deaths onChange=(action (mut player.deaths)) required=true}}
+        </div>
+        <div class="layout-column flex-50">
+          <h3>Score: {{player.score}}</h3>
+          <br>
+          <h3>Ratio: {{player.ratio}}</h3>
+        </div>
+      </div>
+      <div class="layout-row">
+        <div class="layout-column flex-auto">
+          <h4>Team</h4>
+          {{#paper-radio-group groupValue=(readonly player.team) onChange=(action (mut player.team)) as |group|}}
+            {{#each teamColors as |color|}}
+              <label>
+                {{#group.radio value=color}}
+                  {{color}}
+                {{/group.radio}}
+              </label>
+            {{/each}}
+          {{/paper-radio-group}}
+
+          <h4>Character</h4>
+          {{#paper-radio-group groupValue=(readonly player.character) onChange=(action (mut player.character)) as |group|}}
+            {{#each characters as |char|}}
+              {{#group.radio value=char.name}}
+                <img src="{{char.image}}" />
+                <div>{{char.name}}</div>
+              {{/group.radio}}
+            {{/each}}
+          {{/paper-radio-group}}
+        </div>
+      </div>
+    {{/card.content}}
+
+    {{#card.actions}}
+      {{#paper-button rasied=true warn=true onClick=(action 'leaveMatch' player match)}}Leave{{/paper-button}}
+      {{#form.submit-button raised=true primary=true}}Save{{/form.submit-button}}
+    {{/card.actions}}
+  {{/paper-card}}
+
+{{/paper-form}}
