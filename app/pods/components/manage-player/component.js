@@ -8,9 +8,10 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'tr',
   smash: service(),
   audio: service(),
+
+  classNames: ['manage-player'],
 
   characters: computed.alias('smash.characters'),
 
@@ -62,7 +63,7 @@ export default Ember.Component.extend({
 
     leaveMatch( player, match ) {
       match.get('players').removeObject( player );
-      player.destroyRecord();
+      player.destroyRecord().then(() => match.save() );
     }
   }
 });

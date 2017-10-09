@@ -6,15 +6,18 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'table',
-  classNames: ['player-table'],
+  classNames: Ember.String.w("layout-column layout-gt-sm-row"),
   session: service(),
-  sessionPlayer: computed('match.players.[]', 'session.currentUser.displayName', {
+  sessionPlayer: computed('match.players.isFulfilled', 'match.players.[]', 'session.currentUser.displayName', {
     get() {
       const players = this.get('match.players');
       const displayName = this.get('session.currentUser.displayName');
 
-      return players.findBy('userDisplayName', displayName);
+      if ( this.get('match.players.isFulfilled') ) {
+        return players.findBy('userDisplayName', displayName);
+      }
+
+      return;
     }
   })
 });
