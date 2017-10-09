@@ -32,7 +32,7 @@
           {{/paper-radio-group}}
 
           <h4>Character</h4>
-          {{#paper-radio-group groupValue=(readonly player.character) onChange=(action (mut player.character)) as |group|}}
+          {{#paper-radio-group class="character-select" groupValue=(readonly player.character) onChange=(action (mut player.character)) as |group|}}
             {{#each characters as |char|}}
               {{#group.radio value=char.name}}
                 <img src="{{char.image}}" />

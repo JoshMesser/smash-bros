@@ -47,3 +47,26 @@ ul.match-listing {
 		display: inline-block;
 	}
 }
+
+.character-select md-radio-button {
+	.md-container {
+		visibility: hidden;
+	}
+
+	.md-label {
+		margin-left: 0;
+		border-radius: 0.5em;
+		padding: 1em;
+		box-shadow: none;
+		transition: box-shadow 0.6s;
+
+		span div {
+			text-align: center;
+			font-weight: bold;
+		}
+	}
+
+	&.md-checked .md-label {
+		box-shadow: 0 0 1em rgba(0,0,0,0.5);
+	}
+}
