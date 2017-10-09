@@ -46,6 +46,7 @@
     "emberfire": "^2.0.8",
     "liquid-fire": "^0.28.0",
     "loader.js": "^4.2.3",
+    "paper-data-table": "^0.1.4",
     "torii": "^0.9.6"
   },
   "engines": {
