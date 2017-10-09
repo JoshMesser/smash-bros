@@ -27,6 +27,6 @@
 
 {{else}}
   <div class="sign-in">
-    <button {{action 'signIn' 'google'}}>Sign in with Google</button>
+    {{#paper-button raised=true primary=true onClick=(route-action 'signIn' 'google')}}Sign in with Google{{/paper-button}}
   </div>
 {{/liquid-if}}
