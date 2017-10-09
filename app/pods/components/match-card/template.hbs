@@ -41,7 +41,7 @@
 
 		{{!-- Check to see if this player is already a part of this match --}}
 		{{#if match.players.isFulfilled}}
-			{{#unless (includes (map-by match.players 'userDisplayName') session.currentUser.displayName) }}
+			{{#unless (includes (map-by 'userDisplayName' match.players) session.currentUser.displayName) }}
 				{{#paper-button onClick=(action 'joinMatch' match)}}Join{{/paper-button}}
 			{{/unless}}
 		{{/if}}

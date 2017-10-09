@@ -1,23 +1,25 @@
-<h1 class="leaderboard-header">Leaderboard</h1>
+<center>
+	<h1 class="leaderboard-header">Leaderboard</h1>
+</center>
 
-{{#paper-data-table sortProp="name" sortDir="desc" as |table|}}
+{{#paper-data-table sortProp="score" sortDir="desc" as |table|}}
 	{{#table.head as |head|}}
 		{{#head.column sortProp="name"}}Player{{/head.column}}
-		{{#head.column sortProp="total.kills" numeric=true}}Kills{{/head.column}}
-		{{#head.column sortProp="total.deaths" numeric=true}}Deaths{{/head.column}}
-		{{#head.column sortProp="total.score" numeric=true}}Score{{/head.column}}
-		{{#head.column sortProp="total.ratio" numeric=true}}Ratio{{/head.column}}
-		{{#head.column sortProp="history.length" numeric=true}}Total Matches{{/head.column}}
+		{{#head.column sortProp="kills" numeric=true}}Kills{{/head.column}}
+		{{#head.column sortProp="deaths" numeric=true}}Deaths{{/head.column}}
+		{{#head.column sortProp="score" numeric=true}}Score{{/head.column}}
+		{{#head.column sortProp="ratio" numeric=true}}Ratio{{/head.column}}
+		{{#head.column sortProp="matches" numeric=true}}Total Matches{{/head.column}}
 	{{/table.head}}
 	{{#table.body as |body|}}
 		{{#each (sort-by table.sortDesc model) as |player|}}
 			{{#body.row as |row|}}
 				{{#row.cell}}{{player.name}}{{/row.cell}}
-				{{#row.cell numeric=true}}{{player.total.kills}}{{/row.cell}}
-				{{#row.cell numeric=true}}{{player.total.deaths}}{{/row.cell}}
-				{{#row.cell numeric=true}}{{player.total.score}}{{/row.cell}}
-				{{#row.cell numeric=true}}{{player.total.ratio}}{{/row.cell}}
-				{{#row.cell numeric=true}}{{player.history.length}}{{/row.cell}}
+				{{#row.cell numeric=true}}{{player.kills}}{{/row.cell}}
+				{{#row.cell numeric=true}}{{player.deaths}}{{/row.cell}}
+				{{#row.cell numeric=true}}{{player.score}}{{/row.cell}}
+				{{#row.cell numeric=true}}{{player.ratio}}{{/row.cell}}
+				{{#row.cell numeric=true}}{{player.matches}}{{/row.cell}}
 			{{/body.row}}
 		{{/each}}
 	{{/table.body}}

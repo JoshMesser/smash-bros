@@ -24,16 +24,16 @@ export default Ember.Route.extend({
 
 				if ( found ) {
 					get(found, 'history').pushObject( player );
+					set(found, 'matches', get(found, 'matches') + 1);
 				} else {
 					groupedPlayers.pushObject({
 						name,
 						history: [ player ],
-						total: {
-							kills: 0,
-							deaths: 0,
-							score: 0,
-							ratio: 0
-						}
+						matches: 1,
+						kills: 0,
+						deaths: 0,
+						score: 0,
+						ratio: 0
 					})
 				}
 			});
@@ -41,12 +41,12 @@ export default Ember.Route.extend({
 			// Tally up total scores
 			groupedPlayers.forEach(record => {
 				get(record, 'history').forEach(h => {
-					record.total.score += parseInt(get(h, 'score') || 0);
-					record.total.kills += parseInt(get(h, 'kills') || 0);
-					record.total.deaths += parseInt(get(h, 'deaths') || 0);
+					record.score += parseInt(get(h, 'score') || 0);
+					record.kills += parseInt(get(h, 'kills') || 0);
+					record.deaths += parseInt(get(h, 'deaths') || 0);
 				});
 
-				record.total.ratio = record.total.deaths <= 0 ? record.total.kills : record.total.kills / record.total.deaths;
+				record.ratio = record.deaths <= 0 ? record.kills : record.kills / record.deaths;
 			});
 
 			return groupedPlayers.sortBy('total.score').reverse();
