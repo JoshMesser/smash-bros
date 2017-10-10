@@ -45,8 +45,24 @@
     {{/card.content}}
 
     {{#card.actions}}
-      {{#paper-button rasied=true warn=true onClick=(action 'leaveMatch' player match)}}Leave{{/paper-button}}
-      {{#form.submit-button raised=true primary=true}}Save{{/form.submit-button}}
+      {{#paper-button rasied=true warn=true onClick=(action 'leaveMatch' player match)}}
+        Leave
+        {{#paper-tooltip position="top"}}Leave match{{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{#if player.hasDirtyAttributes}}
+        {{#unless player.isNew}}
+          {{#paper-button rasied=true onClick=(action 'rollback' player)}}
+            Undo Changes
+            {{#paper-tooltip position="top"}}Undo changes to your player record{{/paper-tooltip}}
+          {{/paper-button}}
+        {{/unless}}
+
+        {{#form.submit-button raised=true primary=true}}
+          Save
+          {{#paper-tooltip position="top"}}Save player details{{/paper-tooltip}}
+        {{/form.submit-button}}
+      {{/if}}
     {{/card.actions}}
   {{/paper-card}}
 

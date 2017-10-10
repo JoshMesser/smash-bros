@@ -10,6 +10,12 @@ export default Ember.Route.extend({
 	model({ match_id }) {
 		const store = this.get('store');
 		return store.find('match', match_id);
+	},
+
+	actions: {
+		transition( route ) {
+			this.transitionTo( route );
+		}
 	}
 
 });

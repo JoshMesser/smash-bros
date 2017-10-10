@@ -55,6 +55,10 @@ export default Ember.Component.extend({
   }),
 
   actions: {
+    rollback( player ) {
+      player.rollbackAttributes();
+      return;
+    },
 
     save() {
       this.get('player').save();

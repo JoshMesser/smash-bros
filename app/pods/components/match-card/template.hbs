@@ -36,16 +36,25 @@
 
 	{{#card.actions}}
 		{{#if details}}
-			{{#paper-button onClick=(action 'transition' 'match' match.id)}}View Details{{/paper-button}}
+			{{#paper-button onClick=(action 'transition' 'match' match.id)}}
+				View Details
+				{{#paper-tooltip}}View match details{{/paper-tooltip}}
+			{{/paper-button}}
 		{{/if}}
 
 		{{!-- Check to see if this player is already a part of this match --}}
 		{{#if match.players.isFulfilled}}
 			{{#unless (includes (map-by 'userDisplayName' match.players) session.currentUser.displayName) }}
-				{{#paper-button onClick=(action 'joinMatch' match)}}Join{{/paper-button}}
+				{{#paper-button onClick=(action 'joinMatch' match)}}
+					Join
+					{{#paper-tooltip}}Join match{{/paper-tooltip}}
+				{{/paper-button}}
 			{{/unless}}
 		{{/if}}
 
-		{{#paper-button warn=true onClick=(action 'deleteMatch' key match)}}Delete{{/paper-button}}
+		{{#paper-button warn=true onClick=(action 'deleteMatch' key match)}}
+			Delete
+			{{#paper-tooltip}}Delete match{{/paper-tooltip}}
+		{{/paper-button}}
 	{{/card.actions}}
 {{/paper-card}}
