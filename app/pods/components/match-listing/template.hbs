@@ -13,7 +13,7 @@
 
           {{#each matchObj.matches as |match|}}
             <div class="flex-xs flex-gt-xs-25">
-              {{match-card match=match details=true transition=(action 'transition')}}
+              {{match-card matches=matches match=match details=true transition=(action 'transition')}}
             </div>
           {{/each}}
         </div>

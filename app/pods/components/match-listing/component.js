@@ -30,6 +30,7 @@ export default Ember.Component.extend({
           get(record, 'matches').pushObject( match );
         } else {
           matchesAr.pushObject({
+            origCreated: get(match, 'created'),
             created,
             state: { hidden: true },
             matches: Ember.A([ match ])
@@ -37,7 +38,7 @@ export default Ember.Component.extend({
         }
       });
 
-      const returnVal = matchesAr.sortBy('created').reverse();
+      const returnVal = matchesAr.sortBy('origCreated').reverse();
       returnVal.set('firstObject.state.hidden', false);
       return returnVal;
     }
