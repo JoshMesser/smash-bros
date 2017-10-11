@@ -15,7 +15,7 @@
 
 			{{#if playerList}}
 				{{#paper-list}}
-					{{#each (reverse (sort-by 'score' match.players)) as |player|}}
+					{{#each (reverse (sort-by 'score' match.players)) as |player idx|}}
 						{{#paper-item class="md-2-line"}}
 							{{#if player.character}}
 								<img src="{{player.smallCharacterImage}}" class="md-avatar" title="{{player.character}}" />
@@ -24,7 +24,10 @@
 								<h3>{{player.userDisplayName}}</h3>
 								<p>Score: {{player.score}}</p>
 							</div>
-								{{paper-divider inset=true}}
+							{{#if (eq idx 0)}}
+								<div class="md-secondary-container">{{paper-icon 'star'}}</div>
+							{{/if}}
+							{{paper-divider}}
 						{{/paper-item}}
 					{{/each}}
 				{{/paper-list}}
