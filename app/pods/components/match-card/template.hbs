@@ -15,7 +15,7 @@
 
 			{{#if playerList}}
 				{{#paper-list}}
-					{{#each match.players as |player|}}
+					{{#each (reverse (sort-by 'score' match.players)) as |player|}}
 						{{#paper-item class="md-2-line"}}
 							{{#if player.character}}
 								<img src="{{player.smallCharacterImage}}" class="md-avatar" title="{{player.character}}" />
