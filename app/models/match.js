@@ -37,12 +37,8 @@ export default DS.Model.extend({
         const playerScores = players.sortBy('score').reverse();
 
         let prevPlayer;
-        console.groupCollapsed(`${this.get('created')} ${this.get('stage')}`);
         playerScores.forEach(player => {
           if ( player && prevPlayer ) {
-
-            console.log(prevPlayer.get('userDisplayName'), prevPlayer.get('score'));
-            console.log(player.get('userDisplayName'), player.get('score'));
 
             if ( player.get('score') === prevPlayer.get('score') ) {
               // there is a tie
@@ -54,7 +50,6 @@ export default DS.Model.extend({
             prevPlayer = player;
           }
         });
-        console.groupEnd(`${this.get('created')} ${this.get('stage')}`);
       }
 
       return tie;

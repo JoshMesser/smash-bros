@@ -7,6 +7,10 @@ export default {
 		const y = d.getFullYear();
 
 		return `${m}-${day}-${y}`;
+	},
+
+	round(value, decimals) {
+		return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 	}
 
 };

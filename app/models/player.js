@@ -1,5 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import utilities from 'smash-bros/utilities';
+
+const {
+  round
+} = utilities;
 
 const {
   inject: { service },
@@ -57,7 +62,7 @@ export default DS.Model.extend({
         deaths
       } = this.getProperties('kills', 'deaths');
 
-      return deaths <= 0 ? kills : kills/deaths;
+      return round( (deaths <= 0 ? kills : kills/deaths) , 2);
     }
   })
 });

@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import utilities from 'smash-bros/utilities';
+
+const { round } = utilities;
 
 const {
 	inject: { service },
@@ -12,7 +15,7 @@ export default Ember.Route.extend({
 	model() {
 		const store = this.get('store');
 
-		return store.findAll('player').then(players => {
+		return store.findAll('player', { reload: true }).then(players => {
 			const playerArray = players.toArray();
 			const sortedPlayers = playerArray.sortBy('userDisplayName');
 			const groupedPlayers = [];
@@ -46,7 +49,7 @@ export default Ember.Route.extend({
 					record.deaths += parseInt(get(h, 'deaths') || 0);
 				});
 
-				record.ratio = record.deaths <= 0 ? record.kills : record.kills / record.deaths;
+				record.ratio = round( (record.deaths <= 0 ? record.kills : record.kills / record.deaths), 2);
 			});
 
 			return groupedPlayers.sortBy('total.score').reverse();
