@@ -6,6 +6,7 @@
 			{{/text.headline}}
 			{{#text.subhead}}
 				{{match.limit}} Minutes
+				<p>{{match.stage}}</p>
 			{{/text.subhead}}
 		{{/title.text}}
 		{{title.media size="lg" src=match.stageImage alt=match.stage title=match.stage}}
@@ -15,8 +16,17 @@
 
 			{{#if playerList}}
 				{{#paper-list}}
+					{{#if match.tied}}
+						{{#unless match.winner}}
+							{{#paper-item}}
+								{{paper-icon 'warning'}}
+								<p>Tied Match!</p>
+							{{/paper-item}}
+						{{/unless}}
+					{{/if}}
+
 					{{#each (reverse (sort-by 'score' match.players)) as |player idx|}}
-						{{#paper-item class="md-2-line"}}
+						{{#paper-item onClick=(action 'setMatchWinner' match player) class="md-2-line"}}
 							{{#if player.character}}
 								<img src="{{player.smallCharacterImage}}" class="md-avatar" title="{{player.character}}" />
 							{{/if}}
@@ -24,8 +34,14 @@
 								<h3>{{player.userDisplayName}}</h3>
 								<p>Score: {{player.score}}</p>
 							</div>
-							{{#if (eq idx 0)}}
-								<div class="md-secondary-container">{{paper-icon 'star'}}</div>
+							{{#if match.tied}}
+								{{#if (eq match.winner.id player.id)}}
+									<div class="md-secondary-container">{{paper-icon 'star'}}</div>
+								{{/if}}
+							{{else}}
+								{{#if (eq idx 0)}}
+									<div class="md-secondary-container">{{paper-icon 'star'}}</div>
+								{{/if}}
 							{{/if}}
 							{{paper-divider}}
 						{{/paper-item}}

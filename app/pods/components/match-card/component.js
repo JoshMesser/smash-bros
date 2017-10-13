@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   inject: { service },
   RSVP,
+  isEmpty
 } = Ember;
 
 export default Ember.Component.extend({
@@ -10,9 +11,22 @@ export default Ember.Component.extend({
 	store: service(),
 
 	details: true,
-	playerList: true,
-
+  playerList: true,
+  
 	actions: {
+
+    setMatchWinner(match, player) {
+      if ( match.get('tied') && isEmpty(match.get('winner.content')) ) {
+        const cont = confirm(`Are you sure you want to make ${player.get('userDisplayName')} the winner?`);
+
+        if ( cont ) {
+          match.set('winner', player);
+          match.save().then(() => {
+            alert(`${player.get('userDisplayName')} has been made the winner!`);
+          });
+        }
+      }
+    },
 
     deleteMatch( key, match ) {
       this.get('matches').removeObject( match );

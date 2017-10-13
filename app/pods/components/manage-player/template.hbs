@@ -9,8 +9,8 @@
     {{#card.content}}
       <div class="layout-row">
         <div class="layout-column flex-50">
-          {{form.input label="Kills" value=player.kills onChange=(action (mut player.kills)) required=true}}
-          {{form.input label="Deaths" value=player.deaths onChange=(action (mut player.deaths)) required=true}}
+          {{form.input type="number" label="Kills" value=player.kills onChange=(action (mut player.kills)) required=true}}
+          {{form.input type="number" label="Deaths" value=player.deaths onChange=(action (mut player.deaths)) required=true}}
         </div>
         <div class="layout-column flex-50">
           <h3>Score: {{player.score}}</h3>

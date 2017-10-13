@@ -28,4 +28,11 @@ export default function(){
     this.reverse('toUp')
   );
 
+  this.transition(
+    this.hasClass('show-matches'),
+    this.toValue(true),
+    this.use('toDown'),
+    this.reverse('toUp')
+  );
+
 }
